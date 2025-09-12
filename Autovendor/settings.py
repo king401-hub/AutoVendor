@@ -139,15 +139,3 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # DEFAULT_FROM_EMAIL = 'AutoVendor <noreply@autovendor.com>'
 AUTH_USER_MODEL = 'base.CustomUser'
 
-# settings.py
-import os
-from dotenv import load_dotenv
-load_dotenv()
-
-PAYSTACK_PUBLIC_KEY = os.getenv("PAYSTACK_PUBLIC_KEY", "")
-PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY", "")
-PAYSTACK_LIVE_MODE = os.getenv("PAYSTACK_LIVE_MODE", "False") == "True"
-
-import os
-
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
