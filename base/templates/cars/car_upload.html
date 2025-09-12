@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="upload-form">
+    <h1>Upload a New Car</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Upload</button>
+    </form>
+    <a href="{% url 'car_list' %}" class="btn">⬅ Back to Gallery</a>
+</div>
+{% endblock %}

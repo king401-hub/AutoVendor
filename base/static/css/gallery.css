@@ -1,0 +1,32 @@
+/* 🔎 Filter Section */
+.filter-section {
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+}
+.filter-section form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    max-width: 1000px;
+}
+.filter-section input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    flex: 1;
+    min-width: 120px;
+}
+.filter-section .btn {
+    flex: 0 0 auto;
+}
+.filter-section .reset {
+    background: #444;
+}
+.filter-section .reset:hover {
+    background: #666;
+}

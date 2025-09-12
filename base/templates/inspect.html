@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inspection Page | AutoVendor{% endblock %}
+
+{% block content %}
+  <style>
+    /* Carousel Professional Enhancements */
+    .header-carousel .carousel-item {
+      position: relative;
+    }
+    .header-carousel .carousel-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(120deg, rgba(15,23,36,0.82) 60%, rgba(11,18,32,0.7) 100%);
+      z-index: 1;
+    }
+    .header-carousel .carousel-caption {
+      z-index: 2;
+      text-align: left;
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+    .header-carousel h1, .header-carousel p {
+      color: #fff !important;
+      text-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    }
+    .header-carousel h1 {
+      font-size: 2.7rem;
+      font-weight: 900;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+    .header-carousel p {
+      font-size: 1.18rem;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+    .header-carousel .btn {
+      font-size: 1.08rem;
+      font-weight: 700;
+      padding: 0.7rem 2.2rem;
+      border-radius: 2rem;
+      box-shadow: 0 2px 12px rgba(14,165,166,0.10);
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .header-carousel .btn-primary {
+      background: #0ea5a6;
+      border: none;
+    }
+    .header-carousel .btn-outline-light {
+      border: 2px solid #fff;
+      color: #fff;
+    }
+    .header-carousel .btn-outline-light:hover {
+      background: #fff;
+      color: #0ea5a6;
+    }
+    @media (max-width: 991px) {
+      .header-carousel .carousel-caption {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .header-carousel h1 {
+        font-size: 2rem;
+      }
+      .header-carousel p {
+        font-size: 1rem;
+      }
+    }
+    /* Overall gradient background to mirror the frames */
+    body {
+      font-family: 'Lato', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(180deg, #0f1724 0%, #0b1220 100%);
+      color: rgba(58, 87, 102, 0.906)
+    }
+
+    /* Professional Features Section Styling */
+    .feature {
+      background: linear-gradient(120deg, #1a2233 60%, #232b3e 100%);
+      border-radius: 32px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+      padding-top: 3.5rem;
+      padding-bottom: 3.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-item {
+      background: rgba(255,255,255,0.10);
+      border-radius: 20px;
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+      padding: 2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+      border: 1px solid rgba(255,255,255,0.13);
+      position: relative;
+      z-index: 1;
+    }
+    .feature-item:hover {
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.22);
+      transform: translateY(-6px) scale(1.04);
+      background: rgba(255,255,255,0.16);
+    }
+    .feature-icon {
+      background: linear-gradient(135deg, #2b3a5a 60%, #3a4a6e 100%);
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.13);
+      margin-right: 1.5rem;
+      color: #fff;
+      font-size: 2.2rem;
+      transition: background 0.2s, color 0.2s;
+      border: 2px solid #2b3a5a;
+    }
+    .feature-item:hover .feature-icon {
+      background: linear-gradient(135deg, #3a4a6e 60%, #2b3a5a 100%);
+      color: #2f00ff;
+      border-color: #ffd700;
+    }
+    .feature-item .ms-4, .feature-item .text-end {
+      flex: 1;
+    }
+    .feature h5 {
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    .feature p {
+      color: #d0d8e8;
+      font-size: 1.08rem;
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+    .feature .display-5 {
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.13);
+    }
+    .feature .text-secondary {
+      color: #ffd700 !important;
+    }
+    @media (max-width: 991px) {
+      .feature {
+        border-radius: 0;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+      }
+      .feature-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        padding: 1.2rem 1rem;
+      }
+      .feature-icon {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+    }
+
+    /* Navbar tweaks */
+    .nav-bar {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .navbar .navbar-brand h1{font-weight:700; font-size:18px; color:#fff}
+    .navbar .nav-link{color:rgba(255,255,255,0.85) !important}
+    .navbar .btn-secondary{background:#111827; border:1px solid rgba(255,255,255,0.06)}
+
+    /* Header carousel: dark overlay, centered content and big search card */
+    .header-carousel {position:relative;}
+    .header-carousel .carousel-item img{height:72vh; object-fit:cover; filter:brightness(0.6);}
+    .header-carousel .carousel-caption{top:0; bottom:0; left:0; right:0;}
+    .hero-inner{height:72vh; display:flex; align-items:center}
+
+    /* Search card overlay (mobile-first, responsive) */
+    .search-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;
+      padding:18px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.04);
+      max-width:1000px;
+      margin-top:18px;
+    }
+    .search-card .form-control{background:transparent; border:1px solid rgba(255,255,255,0.06); color:#fff}
+    .search-card .form-control::placeholder{color:rgba(255,255,255,0.6)}
+    .search-card .btn-primary{background:#0ea5a6; border: none}
+
+    /* Featured listings */
+    .listing-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12)); border:1px solid rgba(255,255,255,0.03); border-radius:12px; overflow:hidden}
+    .listing-card .card-body{padding:1rem}
+    .badge-price{background:#06b6d4; color:#001; font-weight:700}
+
+    /* Responsive adjustments */
+    @media (max-width: 768px){
+      .header-carousel .carousel-item img{height:56vh}
+      .hero-inner{padding:1.25rem}
+    }
+
+    /* Small UI polish */
+    .feature h5, .about h5{color:#fff}
+    .text-secondary{color:#06b6d4 !important}
+
+    footer.footer{background:#020617}
+    .copyright{background:#02040a}
+
+  </style>
+
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <style>
+  /* Position modal at top-right */
+  .modal-dialog-top-right {
+    position: absolute;
+    top: 70px;   /* adjust depending on navbar height */
+    right: 20px;
+    margin: 0;
+  }
+
+  /* Optional: make modal look like a dropdown card */
+  #profileModal .modal-content {
+    width: 250px;
+  }
+</style>
+<div class="container-fluid page-header mb-5 pt-5 mt-5">
+    <div class="container text-center">
+        <h1 class="display-4 text-dark mb-3 animated slideInDown">Vehicle Inspection</h1>
+        <nav aria-label="breadcrumb" class="animated slideInDown">
+            <ol class="breadcrumb justify-content-center">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Inspection</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Inspection Content Start -->
+<div class="container my-5">
+    <h2 class="mb-4">Comprehensive Vehicle Inspection</h2>
+    <p class="lead">Ensure your car is in perfect condition before making a deal. Our expert inspection team checks all key areas of your vehicle including engine, brakes, tires, electronics, and more.</p>
+    
+    <ol class="list-group list-group-flush">
+        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Full mechanical and electrical diagnostics</li>
+        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Road test analysis</li>
+        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Interior and exterior body review</li>
+        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Verified inspection report for buyers or sellers</li>
+    </ol>
+</div>
+<!-- Inspection Content End -->
+
+<!-- Optional JS -->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+<script>
+  new WOW().init();
+</script>
+{% endblock %}

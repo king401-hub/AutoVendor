@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <meta http-equiv="refresh" content="2;url=index.html">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      text-align: center;
+      padding-top: 100px;
+    }
+  </style>
+</head>
+<body>
+    <script>
+  window.location.href = "{% url 'index' %}";
+</script>
+  <h1>✅ Logged in Successfully!</h1>
+  <p>Redirecting to homepage...</p>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoVendor - Car Gallery</title>
+    <link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+</head>
+<body>
+    <header class="header">
+        <h1>🚗 AutoVendor Car Gallery</h1>
+        <a href="{% url 'car_upload' %}" class="btn">+ Upload Car</a>
+    </header>
+
+    <!-- 🔎 Search & Filter -->
+    <section class="filter-section">
+        <form method="GET" action="">
+            <input type="text" name="q" placeholder="Search by name, brand..." value="{{ request.GET.q }}">
+            <input type="text" name="brand" placeholder="Brand" value="{{ request.GET.brand }}">
+            <input type="number" name="year" placeholder="Year" value="{{ request.GET.year }}">
+            <input type="number" name="min_price" placeholder="Min Price" value="{{ request.GET.min_price }}">
+            <input type="number" name="max_price" placeholder="Max Price" value="{{ request.GET.max_price }}">
+            <button type="submit" class="btn">Search</button>
+            <a href="{% url 'car_list' %}" class="btn reset">Reset</a>
+        </form>
+    </section>
+
+    <!-- 🚘 Gallery -->
+    <main class="gallery">
+        {% for car in cars %}
+        <div class="car-card">
+            <img src="{{ car.image.url }}" alt="{{ car.name }}">
+            <div class="car-info">
+                <h2>{{ car.brand }} {{ car.name }}</h2>
+                <p class="price">₦{{ car.price }}</p>
+                <a href="{% url 'car_detail' car.pk %}" class="btn">View Details</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No cars found matching your search.</p>
+        {% endfor %}
+    </main>
+</body>
+</html>

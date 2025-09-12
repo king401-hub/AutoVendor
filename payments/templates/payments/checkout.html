@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body>
+  <h2>Pay ₦5,000</h2>
+  <button id="payBtn">Pay Now (Card or Bank Transfer)</button>
+
+  <script>
+    const payBtn = document.getElementById('payBtn');
+
+    // Django injects these values safely as strings
+    const email = "{{ email }}";
+    const amount = parseInt("{{ amount|default:0 }}"); // convert to number
+    const reference = "{{ reference }}";
+
+    payBtn.addEventListener('click', function () {
+      var handler = PaystackPop.setup({
+        key: "{{ public_key }}",
+        email: email,
+        amount: amount,
+        currency: "NGN",
+        reference: reference,
+        channels: ['card', 'bank_transfer'],
+        callback: function (response) {
+          window.location.href = "/payments/verify/?reference=" + response.reference;
+        },
+        onClose: function () {
+          alert('Transaction window closed.');
+        }
+      });
+      handler.openIframe();
+    });
+  </script>
+</body>
+</html>
