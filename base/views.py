@@ -298,7 +298,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.encoding import smart_str
 import openai, os
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 @csrf_exempt
 def stream_chat(request):
