@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from django.http import StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.encoding import smart_str
-import openai, os
+# import openai, os
 from .models import Car, CustomUser
 from .forms import CarForm
 
@@ -122,8 +122,6 @@ def user_profile_update(request):
         messages.success(request, "Profile updated successfully!")
         return redirect('user_profile')
     return render(request, 'user_profile.html')
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @csrf_exempt
 def stream_chat(request):
