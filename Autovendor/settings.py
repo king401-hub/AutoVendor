@@ -139,7 +139,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # DEFAULT_FROM_EMAIL = 'AutoVendor <noreply@autovendor.com>'
 AUTH_USER_MODEL = 'base.CustomUser'
 
-
 # For Django REST Framework
 CSRF_TRUSTED_ORIGINS = [
     "https://autovendor.onrender.com",
