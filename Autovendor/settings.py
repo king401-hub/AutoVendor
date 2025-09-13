@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-g^%i*^)+cje3a-4*pw@-w=c$1%b-#a#gux8rluk19r@zvg@n%*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["autovendor.onrender.com", "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -141,10 +141,10 @@ AUTH_USER_MODEL = 'base.CustomUser'
 
 
 # For Django REST Framework
-CORS_ALLOWED_ORIGINS = [
+CSRF_TRUSTED_ORIGINS = [
     "https://autovendor.onrender.com",
-
 ]
+
 
 # Or if you want to allow all origins (not recommended for production)
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development!
