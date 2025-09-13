@@ -139,3 +139,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # DEFAULT_FROM_EMAIL = 'AutoVendor <noreply@autovendor.com>'
 AUTH_USER_MODEL = 'base.CustomUser'
 
+Put it in your settings.py 
+
+# For Django REST Framework
+CORS_ALLOWED_ORIGINS = [
+    "https://autovendor.onrender.com",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+
+# Or if you want to allow all origins (not recommended for production)
+CORS_ALLOW_ALL_ORIGINS = True  # Only for development!
