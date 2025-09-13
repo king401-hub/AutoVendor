@@ -143,8 +143,7 @@ AUTH_USER_MODEL = 'base.CustomUser'
 # For Django REST Framework
 CORS_ALLOWED_ORIGINS = [
     "https://autovendor.onrender.com",
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
+
 ]
 
 # Or if you want to allow all origins (not recommended for production)
