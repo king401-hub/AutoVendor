@@ -139,7 +139,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # DEFAULT_FROM_EMAIL = 'AutoVendor <noreply@autovendor.com>'
 AUTH_USER_MODEL = 'base.CustomUser'
 
-Put it in your settings.py 
 
 # For Django REST Framework
 CORS_ALLOWED_ORIGINS = [
