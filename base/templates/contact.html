@@ -286,63 +286,7 @@
   </div>
 </div>
 {% endif %}
-  <!-- Navbar -->
-  <div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark">
-        <a href="/" class="navbar-brand p-0 d-flex align-items-center gap-1">
-          <img src="{% static 'img/logo.png' %}" alt="Logo" style="width:47px; height:59px; border-radius:50%; object-fit:cover; margin-right:-12px;">
-          <h1 class="fs-5 mb-0">utoVendor</h1>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-          <span class="fa fa-bars"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <div class="navbar-nav mx-auto py-0">
-            <a href="{% url 'index' %}" class="nav-item nav-link active">Home</a>
-            <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
-            <a href="{% url 'service' %}" class="nav-item nav-link">Service</a>
-            <a href="{% url 'blog' %}" class="nav-item nav-link">Blog</a>
 
-            <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-              <div class="dropdown-menu m-0">
-                <a href="{% url 'feature' %}" class="dropdown-item">Our Feature</a>
-                <a href="{% url 'cars' %}" class="dropdown-item">Our Cars</a>
-                <a href="{% url 'team' %}" class="dropdown-item">Our Team</a>
-                <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
-                <a href="{% url 'inspect' %}" class="dropdown-item">Inspection</a>
-              </div>
-            </div>
-            <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
-          </div>
-          {% if request.user.is_authenticated %}
-          
-          <span class="fw-bold ms-3" 
-                style="font-size:clamp(1rem, 2vw, 1.3rem); color:#e2e4e4; letter-spacing:2px;">
-            Hi, {{ request.user.first_name }} {{ request.user.last_name }}.
-</span> 
-<button type="button" class="btn d-flex align-items-center" 
-        data-bs-toggle="modal" data-bs-target="#profileModal" 
-        style="border: none; background: none; padding: 0;">
-  
-  <!-- User Image -->
-  
-  <img src="{{ request.user.profile_image.url }}"
-       alt="User Image"
-       style="height:58px; width:55px; border-radius:50%; border:3px solid #ecf0f0; object-fit:cover; margin-right: 6px;">
-  
-  <!-- Icon (with spacing) -->
-  <i class="bi bi-caret-down-fill" style="font-size:18px; color:#555; margin-left:6px;"></i>
-</button>
-          {% else %}
-<a href="{% url 'login' %}" class="btn mx-lg-3 btn-outline-light rounded-pill py-2 px-4">Login</a>
-          <a href="{% url 'register' %}" class="btn btn-primary rounded-pill py-2 px-4">Get Started</a>
-          {% endif %}
-        </div>
-      </nav>
-    </div>
-  </div>
         <!-- Header Start -->
         <div class="container-fluid bg-breadcrumb">
             <div class="container text-center py-5" style="max-width: 900px;">
@@ -480,7 +424,7 @@
                            <div class="container mt-5">
                              <h2>Contact Us</h2>
                              <p>If you have any questions, feel free to reach us.</p>
-                             <a href="{% url 'help_chat' %}" class="btn btn-outline-primary mt-3">Need Live Help? Chat with Us </a>
+                             <a href="mailto:solomonomotayo84@gmail.com" class="btn btn-outline-primary mt-3">Need Live Help? Chat with Us </a>
                            </div>
                             </div>
                         </div>
@@ -559,8 +503,8 @@
                     <h4 class="text-white mb-4">Contact Info</h4>
                     <p><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</p>
                     <p><i class="fas fa-envelope me-2"></i><a href="mailto:info@example.com" class="text-light">info@example.com</a></p>
-                    <p><i class="fas fa-phone me-2"></i><a href="tel:+2348051206181" class="text-light">+234 805 120 6181</a></p>
-                    <p class="mb-3"><i class="fas fa-print me-2"></i><a href="tel:+2348051206181" class="text-light">+234 805 120 6181</a></p>
+                    <p><i class="fas fa-phone me-2"></i><a href="tel:+2348051206181" class="text-light">(+234) 805 120 6181</a></p>
+                    <p class="mb-3"><i class="fas fa-print me-2"></i><a href="tel:+2348051206181" class="text-light">(+234) 805 120 6181</a></p>
                     <div class="d-flex">
                         <a class="btn btn-secondary btn-md-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f text-white"></i></a>
                         <a class="btn btn-secondary btn-md-square rounded-circle me-2" href="#"><i class="fab fa-twitter text-white"></i></a>
