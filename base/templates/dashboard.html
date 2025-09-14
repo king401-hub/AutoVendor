@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | AutoVendor{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-4">Dashboard</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Welcome, {{ user.first_name }}!</h5>
+          <p class="card-text">Here is a quick overview of your account and recent activity.</p>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Stats</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Cars: {{ cars|length }}</li>
+            <li class="list-group-item">Chats: {{ chats|length }}</li>
+            <li class="list-group-item">Receipts: {{ receipts|length }}</li>
+            <li class="list-group-item">Notifications: {{ notifications|length }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Recent Activities</h5>
+          <ul class="list-group list-group-flush">
+            {% for activity in activities|slice:':5' %}
+            <li class="list-group-item">{{ activity.message }} <br><small class="text-muted">{{ activity.timestamp|date:'M d, H:i' }}</small></li>
+            {% empty %}
+            <li class="list-group-item">No recent activity.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}My Cars | AutoVendor{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-4">My Cars</h2>
+  <div class="row">
+    {% for car in cars %}
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ car.brand }} {{ car.name }}</h5>
+          <p class="card-text">Year: {{ car.year }}<br>Price: ₦{{ car.price }}<br>{{ car.description }}</p>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12"><p>No cars found.</p></div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

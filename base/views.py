@@ -75,7 +75,17 @@ def inspect(request):
     return render(request, 'inspect.html')
 
 def user_profile(request):
-    return render(request, 'user_profile.html')
+    user = request.user
+    # Example: Replace with actual related_name or query for chats, receipts, notifications, activities, cars
+    context = {
+        'user': user,
+        'chats': getattr(user, 'chats', []),
+        'receipts': getattr(user, 'receipts', []),
+        'notifications': getattr(user, 'notifications', []),
+        'activities': getattr(user, 'activities', []),
+        'cars': getattr(user, 'cars', []),
+    }
+    return render(request, 'user_profile.html', context)
 
 def page_not_found(request):
     return render(request, '404.html')

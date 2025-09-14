@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Settings | AutoVendor{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-4">Settings</h2>
+  <div class="card p-4" style="background: #232b3e; color: #e2e4e4;">
+    <form>
+      <div class="form-check form-switch mb-3">
+        <input class="form-check-input" type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+        <label class="form-check-label" for="darkModeToggle">Enable Dark Mode</label>
+      </div>
+      <!-- Add more settings fields here -->
+    </form>
+  </div>
+</div>
+<script>
+function toggleDarkMode() {
+  const body = document.body;
+  body.classList.toggle('dark-mode');
+  if(body.classList.contains('dark-mode')) {
+    body.style.background = 'linear-gradient(180deg, #0f1724 0%, #0b1220 100%)';
+    body.style.color = '#e2e4e4';
+  } else {
+    body.style.background = '';
+    body.style.color = '';
+  }
+}
+</script>
+{% endblock %}

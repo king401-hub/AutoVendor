@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Chats | AutoVendor{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="fw-bold mb-4">Chats</h2>
+  <div class="row">
+    <div class="col-12">
+      <ul class="list-group">
+        {% for chat in chats %}
+        <li class="list-group-item">
+          <strong>{{ chat.title }}</strong><br>
+          <span class="text-muted">Last message: {{ chat.last_message|default:"No messages yet" }}</span>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No chats found.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
