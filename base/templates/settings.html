@@ -1,29 +1,631 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Settings | AutoVendor{% endblock %}
+
 {% block content %}
-<div class="container py-5">
-  <h2 class="fw-bold mb-4">Settings</h2>
-  <div class="card p-4" style="background: #232b3e; color: #e2e4e4;">
-    <form>
-      <div class="form-check form-switch mb-3">
-        <input class="form-check-input" type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
-        <label class="form-check-label" for="darkModeToggle">Enable Dark Mode</label>
-      </div>
-      <!-- Add more settings fields here -->
-    </form>
-  </div>
+<style>
+    .settings-container {
+        font-family: 'Lato', 'Montserrat', Arial, sans-serif;
+        background: #f8f9fa;
+        min-height: 100vh;
+    }
+    .settings-card {
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        overflow: hidden;
+    }
+    .settings-header {
+        background: linear-gradient(120deg, #1a2233 60%, #232b3e 100%);
+        color: white;
+        padding: 1.5rem;
+    }
+    .settings-nav {
+        background: white;
+        border-right: 1px solid #eee;
+    }
+    .settings-nav .nav-link {
+        color: #495057;
+        border-radius: 8px;
+        margin-bottom: 5px;
+        transition: all 0.3s;
+        padding: 0.75rem 1rem;
+    }
+    .settings-nav .nav-link:hover, .settings-nav .nav-link.active {
+        background: #0ea5a6;
+        color: white;
+    }
+    .settings-nav .nav-link i {
+        width: 24px;
+        text-align: center;
+        margin-right: 10px;
+    }
+    .settings-content {
+        background: white;
+        padding: 1.5rem;
+        min-height: 500px;
+    }
+    .section-title {
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #0ea5a6;
+    }
+    .form-control, .form-select {
+        border-radius: 8px;
+        padding: 0.75rem;
+        border: 1px solid #ced4da;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #0ea5a6;
+        box-shadow: 0 0 0 0.25rem rgba(14, 165, 166, 0.25);
+    }
+    .profile-img-container {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 1.5rem;
+    }
+    .profile-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .profile-img-overlay {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: #0ea5a6;
+        color: white;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 30px;
+    }
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+    }
+    .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+    input:checked + .toggle-slider {
+        background-color: #0ea5a6;
+    }
+    input:checked + .toggle-slider:before {
+        transform: translateX(30px);
+    }
+    .notification-item {
+        border-bottom: 1px solid #eee;
+        padding: 1rem 0;
+    }
+    .notification-item:last-child {
+        border-bottom: none;
+    }
+    @media (max-width: 768px) {
+        .settings-nav {
+            border-right: none;
+            border-bottom: 1px solid #eee;
+        }
+    }
+</style>
+
+<div class="container-fluid settings-container py-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="settings-card">
+                    <!-- Header -->
+                    <div class="settings-header">
+                        <h2 class="mb-0"><i class="bi bi-sliders me-2"></i>Settings</h2>
+                        <p class="mb-0">Manage your account preferences and settings</p>
+                    </div>
+                    
+                    <div class="row g-0">
+                        <!-- Navigation -->
+                        <div class="col-lg-3 settings-nav">
+                            <div class="nav flex-column p-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <a class="nav-link active" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">
+                                    <i class="bi bi-person"></i> Profile
+                                </a>
+                                <a class="nav-link" id="v-pills-account-tab" data-bs-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="false">
+                                    <i class="bi bi-shield-lock"></i> Account
+                                </a>
+                                <a class="nav-link" id="v-pills-notifications-tab" data-bs-toggle="pill" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">
+                                    <i class="bi bi-bell"></i> Notifications
+                                </a>
+                                <a class="nav-link" id="v-pills-privacy-tab" data-bs-toggle="pill" href="#v-pills-privacy" role="tab" aria-controls="v-pills-privacy" aria-selected="false">
+                                    <i class="bi bi-lock"></i> Privacy
+                                </a>
+                                <a class="nav-link" id="v-pills-appearance-tab" data-bs-toggle="pill" href="#v-pills-appearance" role="tab" aria-controls="v-pills-appearance" aria-selected="false">
+                                    <i class="bi bi-palette"></i> Appearance
+                                </a>
+                                <a class="nav-link mt-4 text-danger" href="{% url 'logout' %}">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="col-lg-9 settings-content">
+                            <div class="tab-content" id="v-pills-tabContent">
+                                <!-- Profile Tab -->
+                                <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                    <h4 class="section-title">Profile Information</h4>
+                                    
+                                    <div class="profile-img-container">
+                                        <img src="{{ user.profile_image.url }}" class="profile-img" id="profileImage" alt="Profile Image">
+                                        <div class="profile-img-overlay" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                            <i class="bi bi-camera"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-semibold">First Name</label>
+                                            <p class="form-control bg-light">{{ user.first_name }}</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-semibold">Last Name</label>
+                                            <p class="form-control bg-light">{{ user.last_name }}</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-semibold">Email</label>
+                                            <p class="form-control bg-light">{{ user.email }}</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-semibold">Phone</label>
+                                            <p class="form-control bg-light">{{ user.phone|default:"Not provided" }}</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-semibold">Address</label>
+                                            <p class="form-control bg-light">{{ user.address|default:"Not provided" }}</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label fw-semibold">Job Title</label>
+                                            <p class="form-control bg-light">{{ user.job_title|default:"Not provided" }}</p>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label fw-semibold">About Me</label>
+                                            <p class="form-control bg-light" style="min-height: 100px;">{{ user.bio|default:"No bio provided yet." }}</p>
+                                        </div>
+                                        <div class="col-12 text-center mt-4">
+                                            <button class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                                <i class="bi bi-pencil-square me-2"></i>Edit Profile
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Account Tab -->
+                                <div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
+                                    <h4 class="section-title">Account Settings</h4>
+                                    
+                                    <form>
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Change Password</h5>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Current Password</label>
+                                                    <input type="password" class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">New Password</label>
+                                                    <input type="password" class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Confirm New Password</label>
+                                                    <input type="password" class="form-control">
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-primary rounded-pill">Update Password</button>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Two-Factor Authentication</h5>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="twoFactorToggle">
+                                                <label class="form-check-label" for="twoFactorToggle">Enable Two-Factor Authentication</label>
+                                            </div>
+                                            <p class="text-muted small">Add an extra layer of security to your account by enabling two-factor authentication.</p>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Connected Accounts</h5>
+                                            <div class="d-flex gap-3 mb-3">
+                                                <button class="btn btn-outline-secondary rounded-pill"><i class="bi bi-google me-2"></i>Google</button>
+                                                <button class="btn btn-outline-secondary rounded-pill"><i class="bi bi-facebook me-2"></i>Facebook</button>
+                                                <button class="btn btn-outline-secondary rounded-pill"><i class="bi bi-twitter me-2"></i>Twitter</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Notifications Tab -->
+                                <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
+                                    <h4 class="section-title">Notification Preferences</h4>
+                                    
+                                    <form>
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Email Notifications</h5>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                                <label class="form-check-label" for="emailNotifications">Enable email notifications</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="marketingEmails" checked>
+                                                <label class="form-check-label" for="marketingEmails">Receive marketing emails</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="newsletter" checked>
+                                                <label class="form-check-label" for="newsletter">Subscribe to newsletter</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Push Notifications</h5>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="pushNotifications" checked>
+                                                <label class="form-check-label" for="pushNotifications">Enable push notifications</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="newMessages" checked>
+                                                <label class="form-check-label" for="newMessages">New messages</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="priceAlerts" checked>
+                                                <label class="form-check-label" for="priceAlerts">Price alerts</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">SMS Notifications</h5>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="smsNotifications">
+                                                <label class="form-check-label" for="smsNotifications">Enable SMS notifications</label>
+                                            </div>
+                                            <p class="text-muted small">Standard messaging rates may apply.</p>
+                                        </div>
+                                        
+                                        <button type="button" class="btn btn-primary rounded-pill">Save Notification Preferences</button>
+                                    </form>
+                                </div>
+                                
+                                <!-- Privacy Tab -->
+                                <div class="tab-pane fade" id="v-pills-privacy" role="tabpanel" aria-labelledby="v-pills-privacy-tab">
+                                    <h4 class="section-title">Privacy Settings</h4>
+                                    
+                                    <form>
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Data Privacy</h5>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="dataCollection" checked>
+                                                <label class="form-check-label" for="dataCollection">Allow data collection to improve service</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-3">
+                                                <input class="form-check-input" type="checkbox" id="personalizedAds" checked>
+                                                <label class="form-check-label" for="personalizedAds">Personalized advertisements</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Profile Visibility</h5>
+                                            <div class="mb-3">
+                                                <label class="form-label">Who can see your profile?</label>
+                                                <select class="form-select">
+                                                    <option value="public" selected>Everyone</option>
+                                                    <option value="registered">Registered users only</option>
+                                                    <option value="none">Only me</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Who can contact you?</label>
+                                                <select class="form-select">
+                                                    <option value="public" selected>Everyone</option>
+                                                    <option value="registered">Registered users only</option>
+                                                    <option value="none">No one</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Data Management</h5>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button type="button" class="btn btn-outline-secondary rounded-pill">Download my data</button>
+                                                <button type="button" class="btn btn-outline-danger rounded-pill">Delete account</button>
+                                            </div>
+                                            <p class="text-muted small mt-2">Deleting your account will remove all your data from our servers. This action cannot be undone.</p>
+                                        </div>
+                                        
+                                        <button type="button" class="btn btn-primary rounded-pill">Save Privacy Settings</button>
+                                    </form>
+                                </div>
+                                
+                                <!-- Appearance Tab -->
+                                <div class="tab-pane fade" id="v-pills-appearance" role="tabpanel" aria-labelledby="v-pills-appearance-tab">
+                                    <h4 class="section-title">Appearance Settings</h4>
+                                    
+                                    <form>
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Theme</h5>
+                                            <div class="d-flex flex-wrap gap-3 mb-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="theme" id="lightTheme" checked>
+                                                    <label class="form-check-label" for="lightTheme">
+                                                        <i class="bi bi-sun me-1"></i> Light
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="theme" id="darkTheme">
+                                                    <label class="form-check-label" for="darkTheme">
+                                                        <i class="bi bi-moon me-1"></i> Dark
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="theme" id="autoTheme">
+                                                    <label class="form-check-label" for="autoTheme">
+                                                        <i class="bi bi-circle-half me-1"></i> Auto
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Language</h5>
+                                            <div class="mb-3">
+                                                <select class="form-select">
+                                                    <option selected>English</option>
+                                                    <option>Spanish</option>
+                                                    <option>French</option>
+                                                    <option>German</option>
+                                                    <option>Chinese</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5 class="mb-3">Display Density</h5>
+                                            <div class="mb-3">
+                                                <select class="form-select">
+                                                    <option selected>Comfortable</option>
+                                                    <option>Compact</option>
+                                                    <option>Spacious</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="button" class="btn btn-primary rounded-pill">Save Appearance Settings</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content rounded-3 shadow-lg">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="editProfileModalLabel"><i class="bi bi-person-lines-fill me-2"></i>Edit Profile</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            
+            <form method="POST" action="{% url 'user_profile_update' %}" enctype="multipart/form-data" id="profileForm">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="profile-img-container mx-auto">
+                            <img src="{{ user.profile_image.url }}" id="editProfilePic" class="profile-img" alt="Profile Image">
+                            <div class="profile-img-overlay">
+                                <i class="bi bi-camera"></i>
+                                <input type="file" name="profile_image" id="profileImageInput" class="d-none" accept="image/*" onchange="previewEditImage(event)">
+                            </div>
+                        </div>
+                        <small class="text-muted">Click on the camera icon to change your profile picture</small>
+                    </div>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">First Name *</label>
+                            <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Last Name *</label>
+                            <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Email *</label>
+                            <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Phone</label>
+                            <input type="text" name="phone" class="form-control" value="{{ user.phone|default:'' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Address</label>
+                            <input type="text" name="address" class="form-control" value="{{ user.address|default:'' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Job Title</label>
+                            <input type="text" name="job_title" class="form-control" value="{{ user.job_title|default:'' }}">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">About Me</label>
+                            <textarea name="bio" class="form-control" rows="4">{{ user.bio|default:'' }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-check-circle me-1"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
-function toggleDarkMode() {
-  const body = document.body;
-  body.classList.toggle('dark-mode');
-  if(body.classList.contains('dark-mode')) {
-    body.style.background = 'linear-gradient(180deg, #0f1724 0%, #0b1220 100%)';
-    body.style.color = '#e2e4e4';
-  } else {
-    body.style.background = '';
-    body.style.color = '';
-  }
-}
+    // Image preview function
+    function previewEditImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            document.getElementById('editProfilePic').src = reader.result;
+            document.getElementById('profileImage').src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+    
+    // Make profile image clickable
+    document.querySelector('.profile-img-overlay').addEventListener('click', function() {
+        document.getElementById('profileImageInput').click();
+    });
+    
+    // Theme switcher
+    document.addEventListener('DOMContentLoaded', function() {
+        const darkModeToggle = document.getElementById('darkTheme');
+        const lightModeToggle = document.getElementById('lightTheme');
+        const autoModeToggle = document.getElementById('autoTheme');
+        
+        // Check for saved theme preference or respect OS preference
+        const savedTheme = localStorage.getItem('theme') || 'auto';
+        
+        if (savedTheme === 'dark') {
+            darkModeToggle.checked = true;
+            document.body.setAttribute('data-theme', 'dark');
+        } else if (savedTheme === 'light') {
+            lightModeToggle.checked = true;
+            document.body.setAttribute('data-theme', 'light');
+        } else {
+            autoModeToggle.checked = true;
+            // Check system preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.setAttribute('data-theme', 'dark');
+            } else {
+                document.body.setAttribute('data-theme', 'light');
+            }
+        }
+        
+        // Add event listeners
+        darkModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        lightModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        autoModeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                localStorage.setItem('theme', 'auto');
+                // Check system preference
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.body.setAttribute('data-theme', 'dark');
+                } else {
+                    document.body.setAttribute('data-theme', 'light');
+                }
+            }
+        });
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (localStorage.getItem('theme') === 'auto') {
+                if (event.matches) {
+                    document.body.setAttribute('data-theme', 'dark');
+                } else {
+                    document.body.setAttribute('data-theme', 'light');
+                }
+            }
+        });
+    });
+    
+    // Form submission handling
+    document.getElementById('profileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Simple validation
+        const firstName = document.querySelector('input[name="first_name"]').value;
+        const lastName = document.querySelector('input[name="last_name"]').value;
+        const email = document.querySelector('input[name="email"]').value;
+        
+        if (!firstName || !lastName || !email) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Create FormData object to handle file upload
+        const formData = new FormData(this);
+        
+        // Submit form via AJAX
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                alert('Profile updated successfully!');
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
+                modal.hide();
+                // Reload page to reflect changes
+                location.reload();
+            } else {
+                alert('Error updating profile: ' + (data.message || 'Please try again.'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
 </script>
 {% endblock %}

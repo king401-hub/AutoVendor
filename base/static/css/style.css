@@ -1017,6 +1017,31 @@ body, html {
             font-weight: 700;
             color: #333;
         }
+        /* styles.css */
+[data-theme="dark"] {
+    --bg-color: #0f1724;
+    --text-color: #e2e4e4;
+    --card-bg: #1a2233;
+    --border-color: #2d3748;
+}
+
+[data-theme="light"] {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --card-bg: #ffffff;
+    --border-color: #dee2e6;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
  /*** Login Page end ***/
 
 /*** Register Page Start ***/

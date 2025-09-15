@@ -1,5 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
+<html lang="en" data-theme="{{ request.theme|default:'light' }}">
+<head>
+    <!-- ... -->
+</head>
+<body class="theme-{{ request.theme|default:'light' }}">
+    <!-- ... -->
+</body>
+</html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -433,4 +441,5 @@
     </div>
   </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </html>

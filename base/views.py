@@ -1,3 +1,42 @@
+def dashboard(request):
+    user = request.user
+    context = {
+        'user': user,
+        'cars': getattr(user, 'cars', []),
+        'chats': getattr(user, 'chats', []),
+        'receipts': getattr(user, 'receipts', []),
+        'notifications': getattr(user, 'notifications', []),
+        'activities': getattr(user, 'activities', []),
+    }
+    return render(request, 'dashboard.html', context)
+
+def my_cars(request):
+    user = request.user
+    context = {
+        'user': user,
+        'cars': getattr(user, 'cars', []),
+    }
+    return render(request, 'my_cars.html', context)
+
+def chats(request):
+    user = request.user
+    context = {
+        'user': user,
+        'chats': getattr(user, 'chats', []),
+    }
+    return render(request, 'chats.html', context)
+
+def receipts(request):
+    user = request.user
+    context = {
+        'user': user,
+        'receipts': getattr(user, 'receipts', []),
+    }
+    return render(request, 'receipts.html', context)
+
+def settings(request):
+    user = request.user
+    return render(request, 'settings.html', {'user': user})
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages, auth
 from django.contrib.auth import authenticate
@@ -126,6 +165,7 @@ def user_profile_update(request):
         user.bio = request.POST.get('bio')
         user.phone = request.POST.get('phone')
         user.address = request.POST.get('address')
+        user.job_title = request.POST.get('job_title')
         if request.FILES.get('profile_image'):
             user.profile_image = request.FILES['profile_image']
         user.save()
@@ -391,3 +431,228 @@ def car_list(request):
         'min_price': min_price,
         'max_price': max_price,
     })
+
+    from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model, update_session_auth_hash
+from django.contrib import messages
+from django.http import JsonResponse
+from .forms import (
+    UserUpdateForm, 
+    NotificationSettingsForm,
+    PrivacySettingsForm,
+    AccountSettingsForm,
+    AppearanceSettingsForm,
+    CarForm
+)
+
+User = get_user_model()
+
+@login_required
+def settings_view(request):
+    # Get the active tab from the request
+    active_tab = request.GET.get('tab', 'profile')
+    
+    # Initialize all forms
+    user_form = UserUpdateForm(instance=request.user)
+    notification_form = NotificationSettingsForm(instance=request.user)
+    privacy_form = PrivacySettingsForm(instance=request.user)
+    account_form = AccountSettingsForm(instance=request.user)
+    appearance_form = AppearanceSettingsForm(instance=request.user)
+    
+    context = {
+        'active_tab': active_tab,
+        'user_form': user_form,
+        'notification_form': notification_form,
+        'privacy_form': privacy_form,
+        'account_form': account_form,
+        'appearance_form': appearance_form,
+    }
+    
+    return render(request, 'settings/settings.html', context)
+
+@login_required
+def user_profile_update(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(
+            request.POST, 
+            request.FILES, 
+            instance=request.user
+        )
+        
+        if user_form.is_valid():
+            user_form.save()
+            
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Profile updated successfully!'
+                })
+            else:
+                messages.success(request, 'Your profile has been updated!')
+                return redirect('settings')
+        else:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Error updating profile. Please check your inputs.',
+                    'errors': user_form.errors.get_json_data()
+                })
+            else:
+                messages.error(request, 'Error updating profile. Please check your inputs.')
+    
+    return redirect('settings')
+
+@login_required
+def update_notification_settings(request):
+    if request.method == 'POST':
+        form = NotificationSettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Notification settings updated successfully!'
+                })
+            else:
+                messages.success(request, 'Notification settings updated!')
+        else:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Error updating notification settings.'
+                })
+            else:
+                messages.error(request, 'Error updating notification settings.')
+    
+    return redirect('settings')
+
+@login_required
+def update_privacy_settings(request):
+    if request.method == 'POST':
+        form = PrivacySettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Privacy settings updated successfully!'
+                })
+            else:
+                messages.success(request, 'Privacy settings updated!')
+        else:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Error updating privacy settings.'
+                })
+            else:
+                messages.error(request, 'Error updating privacy settings.')
+    
+    return redirect('settings')
+
+@login_required
+def update_account_settings(request):
+    if request.method == 'POST':
+        form = AccountSettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Account settings updated successfully!'
+                })
+            else:
+                messages.success(request, 'Account settings updated!')
+        else:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Error updating account settings.'
+                })
+            else:
+                messages.error(request, 'Error updating account settings.')
+    
+    return redirect('settings')
+
+@login_required
+def update_appearance_settings(request):
+    if request.method == 'POST':
+        form = AppearanceSettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Appearance settings updated successfully!'
+                })
+            else:
+                messages.success(request, 'Appearance settings updated!')
+        else:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Error updating appearance settings.'
+                })
+            else:
+                messages.error(request, 'Error updating appearance settings.')
+    
+    return redirect('settings')
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        
+        # Check if current password is correct
+        if not request.user.check_password(current_password):
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Current password is incorrect.'
+                })
+            else:
+                messages.error(request, 'Current password is incorrect.')
+            return redirect('settings')
+        
+        # Check if new passwords match
+        if new_password != confirm_password:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': 'New passwords do not match.'
+                })
+            else:
+                messages.error(request, 'New passwords do not match.')
+            return redirect('settings')
+        
+        # Check password strength (optional)
+        if len(new_password) < 8:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Password must be at least 8 characters long.'
+                })
+            else:
+                messages.error(request, 'Password must be at least 8 characters long.')
+            return redirect('settings')
+        
+        # Change password
+        request.user.set_password(new_password)
+        request.user.save()
+        
+        # Update session to prevent logout
+        update_session_auth_hash(request, request.user)
+        
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({
+                'success': True,
+                'message': 'Password changed successfully!'
+            })
+        else:
+            messages.success(request, 'Password changed successfully!')
+            return redirect('settings')
+    
+    return redirect('settings')
