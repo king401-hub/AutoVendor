@@ -36,15 +36,15 @@ urlpatterns = [
 
 ]
 
-from django.urls import path
-from . import views
+# from django.urls import path
+# from . import views
 
-urlpatterns = [
-    path('settings/', views.settings_view, name='settings'),
-    path('settings/profile/update/', views.user_profile_update, name='user_profile_update'),
-    path('settings/notifications/update/', views.update_notification_settings, name='update_notification_settings'),
-    path('settings/privacy/update/', views.update_privacy_settings, name='update_privacy_settings'),
-    path('settings/account/update/', views.update_account_settings, name='update_account_settings'),
-    path('settings/appearance/update/', views.update_appearance_settings, name='update_appearance_settings'),
-    path('settings/password/change/', views.change_password, name='change_password'),
-]
+# urlpatterns = [
+#     path('settings/', views.settings_view, name='settings'),
+#     path('settings/profile/update/', views.user_profile_update, name='user_profile_update'),
+#     path('settings/notifications/update/', views.update_notification_settings, name='update_notification_settings'),
+#     path('settings/privacy/update/', views.update_privacy_settings, name='update_privacy_settings'),
+#     path('settings/account/update/', views.update_account_settings, name='update_account_settings'),
+#     path('settings/appearance/update/', views.update_appearance_settings, name='update_appearance_settings'),
+#     path('settings/password/change/', views.change_password, name='change_password'),
+# ]
