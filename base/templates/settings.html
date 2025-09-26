@@ -228,214 +228,221 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Account Tab -->
-                                <div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
-                                    <h4 class="section-title">Account Settings</h4>
-                                    
-                                    <form>
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Change Password</h5>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Current Password</label>
-                                                    <input type="password" class="form-control">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">New Password</label>
-                                                    <input type="password" class="form-control">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Confirm New Password</label>
-                                                    <input type="password" class="form-control">
-                                                </div>
-                                            </div>
-                                            <button type="button" class="btn btn-primary rounded-pill">Update Password</button>
-                                        </div>
-                                        
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Two-Factor Authentication</h5>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="twoFactorToggle">
-                                                <label class="form-check-label" for="twoFactorToggle">Enable Two-Factor Authentication</label>
-                                            </div>
-                                            <p class="text-muted small">Add an extra layer of security to your account by enabling two-factor authentication.</p>
-                                        </div>
-                                        
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Connected Accounts</h5>
-                                            <div class="d-flex gap-3 mb-3">
-                                                <button class="btn btn-outline-secondary rounded-pill"><i class="bi bi-google me-2"></i>Google</button>
-                                                <button class="btn btn-outline-secondary rounded-pill"><i class="bi bi-facebook me-2"></i>Facebook</button>
-                                                <button class="btn btn-outline-secondary rounded-pill"><i class="bi bi-twitter me-2"></i>Twitter</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                
-                                <!-- Notifications Tab -->
-                                <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
-                                    <h4 class="section-title">Notification Preferences</h4>
-                                    
-                                    <form>
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Email Notifications</h5>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
-                                                <label class="form-check-label" for="emailNotifications">Enable email notifications</label>
-                                            </div>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="marketingEmails" checked>
-                                                <label class="form-check-label" for="marketingEmails">Receive marketing emails</label>
-                                            </div>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="newsletter" checked>
-                                                <label class="form-check-label" for="newsletter">Subscribe to newsletter</label>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Push Notifications</h5>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="pushNotifications" checked>
-                                                <label class="form-check-label" for="pushNotifications">Enable push notifications</label>
-                                            </div>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="newMessages" checked>
-                                                <label class="form-check-label" for="newMessages">New messages</label>
-                                            </div>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="priceAlerts" checked>
-                                                <label class="form-check-label" for="priceAlerts">Price alerts</label>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">SMS Notifications</h5>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="smsNotifications">
-                                                <label class="form-check-label" for="smsNotifications">Enable SMS notifications</label>
-                                            </div>
-                                            <p class="text-muted small">Standard messaging rates may apply.</p>
-                                        </div>
-                                        
-                                        <button type="button" class="btn btn-primary rounded-pill">Save Notification Preferences</button>
-                                    </form>
-                                </div>
-                                
-                                <!-- Privacy Tab -->
-                                <div class="tab-pane fade" id="v-pills-privacy" role="tabpanel" aria-labelledby="v-pills-privacy-tab">
-                                    <h4 class="section-title">Privacy Settings</h4>
-                                    
-                                    <form>
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Data Privacy</h5>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="dataCollection" checked>
-                                                <label class="form-check-label" for="dataCollection">Allow data collection to improve service</label>
-                                            </div>
-                                            <div class="form-check form-switch mb-3">
-                                                <input class="form-check-input" type="checkbox" id="personalizedAds" checked>
-                                                <label class="form-check-label" for="personalizedAds">Personalized advertisements</label>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Profile Visibility</h5>
-                                            <div class="mb-3">
-                                                <label class="form-label">Who can see your profile?</label>
-                                                <select class="form-select">
-                                                    <option value="public" selected>Everyone</option>
-                                                    <option value="registered">Registered users only</option>
-                                                    <option value="none">Only me</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Who can contact you?</label>
-                                                <select class="form-select">
-                                                    <option value="public" selected>Everyone</option>
-                                                    <option value="registered">Registered users only</option>
-                                                    <option value="none">No one</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Data Management</h5>
-                                            <div class="d-flex flex-wrap gap-2">
-                                                <button type="button" class="btn btn-outline-secondary rounded-pill">Download my data</button>
-                                                <button type="button" class="btn btn-outline-danger rounded-pill">Delete account</button>
-                                            </div>
-                                            <p class="text-muted small mt-2">Deleting your account will remove all your data from our servers. This action cannot be undone.</p>
-                                        </div>
-                                        
-                                        <button type="button" class="btn btn-primary rounded-pill">Save Privacy Settings</button>
-                                    </form>
-                                </div>
-                                
-                                <!-- Appearance Tab -->
-                                <div class="tab-pane fade" id="v-pills-appearance" role="tabpanel" aria-labelledby="v-pills-appearance-tab">
-                                    <h4 class="section-title">Appearance Settings</h4>
-                                    
-                                    <form>
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Theme</h5>
-                                            <div class="d-flex flex-wrap gap-3 mb-3">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="theme" id="lightTheme" checked>
-                                                    <label class="form-check-label" for="lightTheme">
-                                                        <i class="bi bi-sun me-1"></i> Light
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="theme" id="darkTheme">
-                                                    <label class="form-check-label" for="darkTheme">
-                                                        <i class="bi bi-moon me-1"></i> Dark
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="theme" id="autoTheme">
-                                                    <label class="form-check-label" for="autoTheme">
-                                                        <i class="bi bi-circle-half me-1"></i> Auto
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Language</h5>
-                                            <div class="mb-3">
-                                                <select class="form-select">
-                                                    <option selected>English</option>
-                                                    <option>Spanish</option>
-                                                    <option>French</option>
-                                                    <option>German</option>
-                                                    <option>Chinese</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-4">
-                                            <h5 class="mb-3">Display Density</h5>
-                                            <div class="mb-3">
-                                                <select class="form-select">
-                                                    <option selected>Comfortable</option>
-                                                    <option>Compact</option>
-                                                    <option>Spacious</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <button type="button" class="btn btn-primary rounded-pill">Save Appearance Settings</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<!-- Account Tab -->
+<div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
+    <h4 class="section-title">Account Settings</h4>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="section" value="account">
+
+        <div class="mb-4">
+            <h5 class="mb-3">Change Password</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Current Password</label>
+                    <input type="password" class="form-control" name="current_password">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">New Password</label>
+                    <input type="password" class="form-control" name="new_password">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Confirm New Password</label>
+                    <input type="password" class="form-control" name="confirm_new_password">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary rounded-pill">Update Password</button>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3">Two-Factor Authentication</h5>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="two_factor" id="twoFactorToggle"
+                       {% if account.two_factor_enabled %}checked{% endif %}>
+                <label class="form-check-label" for="twoFactorToggle">Enable Two-Factor Authentication</label>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3">Connected Accounts</h5>
+            <div class="d-flex gap-3 mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="google" id="googleAccount"
+                           {% if account.google_connected %}checked{% endif %}>
+                    <label for="googleAccount">Google</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="facebook" id="facebookAccount"
+                           {% if account.facebook_connected %}checked{% endif %}>
+                    <label for="facebookAccount">Facebook</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="twitter" id="twitterAccount"
+                           {% if account.twitter_connected %}checked{% endif %}>
+                    <label for="twitterAccount">Twitter</label>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
+
+<!-- Notifications Tab -->
+<div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
+    <h4 class="section-title">Notification Preferences</h4>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="section" value="notifications">
+
+        <div class="mb-4">
+            <h5 class="mb-3">Email Notifications</h5>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="email_notifications" id="emailNotifications"
+                       {% if notification.email_notifications %}checked{% endif %}>
+                <label class="form-check-label" for="emailNotifications">Enable email notifications</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="marketing_emails" id="marketingEmails"
+                       {% if notification.marketing_emails %}checked{% endif %}>
+                <label class="form-check-label" for="marketingEmails">Receive marketing emails</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="newsletter" id="newsletter"
+                       {% if notification.newsletter %}checked{% endif %}>
+                <label class="form-check-label" for="newsletter">Subscribe to newsletter</label>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3">Push Notifications</h5>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="push_notifications" id="pushNotifications"
+                       {% if notification.push_notifications %}checked{% endif %}>
+                <label class="form-check-label" for="pushNotifications">Enable push notifications</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="new_messages" id="newMessages"
+                       {% if notification.new_messages %}checked{% endif %}>
+                <label class="form-check-label" for="newMessages">New messages</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="price_alerts" id="priceAlerts"
+                       {% if notification.price_alerts %}checked{% endif %}>
+                <label class="form-check-label" for="priceAlerts">Price alerts</label>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3">SMS Notifications</h5>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="sms_notifications" id="smsNotifications"
+                       {% if notification.sms_notifications %}checked{% endif %}>
+                <label class="form-check-label" for="smsNotifications">Enable SMS notifications</label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary rounded-pill">Save Notification Preferences</button>
+    </form>
+</div>
+
+<!-- Privacy Tab -->
+<div class="tab-pane fade" id="v-pills-privacy" role="tabpanel" aria-labelledby="v-pills-privacy-tab">
+    <h4 class="section-title">Privacy Settings</h4>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="section" value="privacy">
+
+        <div class="mb-4">
+            <h5 class="mb-3">Data Privacy</h5>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="data_collection" id="dataCollection"
+                       {% if privacy.data_collection %}checked{% endif %}>
+                <label class="form-check-label" for="dataCollection">Allow data collection</label>
+            </div>
+            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" name="personalized_ads" id="personalizedAds"
+                       {% if privacy.personalized_ads %}checked{% endif %}>
+                <label class="form-check-label" for="personalizedAds">Personalized advertisements</label>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3">Profile Visibility</h5>
+            <div class="mb-3">
+                <label class="form-label">Who can see your profile?</label>
+                <select class="form-select" name="profile_visibility">
+                    <option value="public" {% if privacy.profile_visibility == "public" %}selected{% endif %}>Everyone</option>
+                    <option value="registered" {% if privacy.profile_visibility == "registered" %}selected{% endif %}>Registered users only</option>
+                    <option value="none" {% if privacy.profile_visibility == "none" %}selected{% endif %}>Only me</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Who can contact you?</label>
+                <select class="form-select" name="contact_permission">
+                    <option value="public" {% if privacy.contact_permission == "public" %}selected{% endif %}>Everyone</option>
+                    <option value="registered" {% if privacy.contact_permission == "registered" %}selected{% endif %}>Registered users only</option>
+                    <option value="none" {% if privacy.contact_permission == "none" %}selected{% endif %}>No one</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary rounded-pill">Save Privacy Settings</button>
+    </form>
+</div>
+
+<!-- Appearance Tab -->
+<div class="tab-pane fade" id="v-pills-appearance" role="tabpanel" aria-labelledby="v-pills-appearance-tab">
+    <h4 class="section-title">Appearance Settings</h4>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="section" value="appearance">
+
+        <div class="mb-4">
+            <h5 class="mb-3">Theme</h5>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="theme" value="light" id="lightTheme"
+                       {% if appearance.theme == "light" %}checked{% endif %}>
+                <label class="form-check-label" for="lightTheme"><i class="bi bi-sun me-1"></i> Light</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="theme" value="dark" id="darkTheme"
+                       {% if appearance.theme == "dark" %}checked{% endif %}>
+                <label class="form-check-label" for="darkTheme"><i class="bi bi-moon me-1"></i> Dark</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="theme" value="auto" id="autoTheme"
+                       {% if appearance.theme == "auto" %}checked{% endif %}>
+                <label class="form-check-label" for="autoTheme"><i class="bi bi-circle-half me-1"></i> Auto</label>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3">Language</h5>
+            <select class="form-select" name="language">
+                <option {% if appearance.language == "English" %}selected{% endif %}>English</option>
+                <option {% if appearance.language == "Spanish" %}selected{% endif %}>Spanish</option>
+                <option {% if appearance.language == "French" %}selected{% endif %}>French</option>
+                <option {% if appearance.language == "German" %}selected{% endif %}>German</option>
+                <option {% if appearance.language == "Chinese" %}selected{% endif %}>Chinese</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3">Display Density</h5>
+            <select class="form-select" name="display_density">
+                <option value="comfortable" {% if appearance.display_density == "comfortable" %}selected{% endif %}>Comfortable</option>
+                <option value="compact" {% if appearance.display_density == "compact" %}selected{% endif %}>Compact</option>
+                <option value="spacious" {% if appearance.display_density == "spacious" %}selected{% endif %}>Spacious</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary rounded-pill">Save Appearance Settings</button>
+    </form>
+</div>
+
 
 <!-- Edit Profile Modal -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
@@ -513,14 +520,17 @@
         }
         reader.readAsDataURL(event.target.files[0]);
     }
-    
-    // Make profile image clickable
-    document.querySelector('.profile-img-overlay').addEventListener('click', function() {
-        document.getElementById('profileImageInput').click();
-    });
-    
-    // Theme switcher
+
+    // Wrap event listener in DOMContentLoaded to avoid errors in terminal
     document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.querySelector('.profile-img-overlay');
+        if (overlay) {
+            overlay.addEventListener('click', function() {
+                document.getElementById('profileImageInput').click();
+            });
+        }
+
+        // Theme switcher
         const darkModeToggle = document.getElementById('darkTheme');
         const lightModeToggle = document.getElementById('lightTheme');
         const autoModeToggle = document.getElementById('autoTheme');
@@ -627,5 +637,5 @@
             alert('An error occurred. Please try again.');
         });
     });
-</script>
+</script> 
 {% endblock %}

@@ -656,3 +656,63 @@ def change_password(request):
             return redirect('settings')
     
     return redirect('settings')
+
+    from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import AccountSettings, NotificationSettings, PrivacySettings, AppearanceSettings
+
+
+@login_required
+def settings_page(request):
+    # Get or create default settings for user
+    account, _ = AccountSettings.objects.get_or_create(user=request.user)
+    notification, _ = NotificationSettings.objects.get_or_create(user=request.user)
+    privacy, _ = PrivacySettings.objects.get_or_create(user=request.user)
+    appearance, _ = AppearanceSettings.objects.get_or_create(user=request.user)
+
+    if request.method == "POST":
+        section = request.POST.get("section")  # Identify which form is submitted
+
+        if section == "account":
+            account.two_factor_enabled = request.POST.get("two_factor") == "on"
+            account.google_connected = request.POST.get("google") == "on"
+            account.facebook_connected = request.POST.get("facebook") == "on"
+            account.twitter_connected = request.POST.get("twitter") == "on"
+            account.save()
+            messages.success(request, "Account settings updated.")
+
+        elif section == "notifications":
+            notification.email_notifications = request.POST.get("email_notifications") == "on"
+            notification.marketing_emails = request.POST.get("marketing_emails") == "on"
+            notification.newsletter = request.POST.get("newsletter") == "on"
+            notification.push_notifications = request.POST.get("push_notifications") == "on"
+            notification.new_messages = request.POST.get("new_messages") == "on"
+            notification.price_alerts = request.POST.get("price_alerts") == "on"
+            notification.sms_notifications = request.POST.get("sms_notifications") == "on"
+            notification.save()
+            messages.success(request, "Notification settings updated.")
+
+        elif section == "privacy":
+            privacy.data_collection = request.POST.get("data_collection") == "on"
+            privacy.personalized_ads = request.POST.get("personalized_ads") == "on"
+            privacy.profile_visibility = request.POST.get("profile_visibility", "public")
+            privacy.contact_permission = request.POST.get("contact_permission", "public")
+            privacy.save()
+            messages.success(request, "Privacy settings updated.")
+
+        elif section == "appearance":
+            appearance.theme = request.POST.get("theme", "light")
+            appearance.language = request.POST.get("language", "English")
+            appearance.display_density = request.POST.get("display_density", "comfortable")
+            appearance.save()
+            messages.success(request, "Appearance settings updated.")
+
+        return redirect("settings")
+
+    return render(request, "settings.html", {
+        "account": account,
+        "notification": notification,
+        "privacy": privacy,
+        "appearance": appearance,
+    })

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -44,3 +45,88 @@ class Car(models.Model):
 
     def __str__(self):
         return f"{self.brand} {self.name} ({self.year})"
+
+# Use settings.AUTH_USER_MODEL for all related user fields
+class AccountSettings(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="account_settings")
+
+    # Password change handled by Django’s built-in auth, no need to store here
+    two_factor_enabled = models.BooleanField(default=False)
+
+    google_connected = models.BooleanField(default=False)
+    facebook_connected = models.BooleanField(default=False)
+    twitter_connected = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} - Account Settings"
+
+
+class NotificationSettings(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notification_settings")
+
+    # Email
+    email_notifications = models.BooleanField(default=True)
+    marketing_emails = models.BooleanField(default=True)
+    newsletter = models.BooleanField(default=True)
+
+    # Push
+    push_notifications = models.BooleanField(default=True)
+    new_messages = models.BooleanField(default=True)
+    price_alerts = models.BooleanField(default=True)
+
+    # SMS
+    sms_notifications = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} - Notification Settings"
+
+
+class PrivacySettings(models.Model):
+    PROFILE_VISIBILITY_CHOICES = [
+        ("public", "Everyone"),
+        ("registered", "Registered users only"),
+        ("none", "Only me"),
+    ]
+
+    CONTACT_CHOICES = [
+        ("public", "Everyone"),
+        ("registered", "Registered users only"),
+        ("none", "No one"),
+    ]
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="privacy_settings")
+
+    data_collection = models.BooleanField(default=True)
+    personalized_ads = models.BooleanField(default=True)
+
+    profile_visibility = models.CharField(max_length=20, choices=PROFILE_VISIBILITY_CHOICES, default="public")
+    contact_permission = models.CharField(max_length=20, choices=CONTACT_CHOICES, default="public")
+
+    def __str__(self):
+        return f"{self.user.username} - Privacy Settings"
+
+
+class AppearanceSettings(models.Model):
+    THEME_CHOICES = [
+        ("light", "Light"),
+        ("dark", "Dark"),
+        ("auto", "Auto"),
+    ]
+
+    DENSITY_CHOICES = [
+        ("comfortable", "Comfortable"),
+        ("compact", "Compact"),
+        ("spacious", "Spacious"),
+    ]
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="appearance_settings")
+
+    theme = models.CharField(max_length=10, choices=THEME_CHOICES, default="light")
+    language = models.CharField(max_length=50, default="English")
+    display_density = models.CharField(max_length=20, choices=DENSITY_CHOICES, default="comfortable")
+
+    def __str__(self):
+        return f"{self.user.username} - Appearance Settings"
+    def __str__(self):
+        return f"{self.user.username} - Appearance Settings"
+
